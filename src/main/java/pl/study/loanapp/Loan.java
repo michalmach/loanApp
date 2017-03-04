@@ -1,34 +1,40 @@
 package pl.study.loanapp;
 
+import org.apache.tomcat.jni.Local;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Entity
 public class Loan {
 
-    private String contractId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private int amount;
     private LocalDateTime fromDate;
     private LocalDateTime toDate;
-    private String ipAddress;
     private LocalDateTime requestTime;
     private Status status;
 
-    public Loan(String contractId, int amount, LocalDateTime fromDate, LocalDateTime toDate, String ipAddress) {
-        this.contractId = contractId;
+    public Loan(int amount, LocalDateTime fromDate, LocalDateTime toDate, LocalDateTime requestTime) {
         this.amount = amount;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.ipAddress = ipAddress;
-
-        this.requestTime = LocalDateTime.now();
+        this.requestTime = requestTime;
         this.status = Status.NEW;
     }
 
-    public String getContractId() {
-        return contractId;
+    public Long getContractId() {
+        return id;
     }
 
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
+    public void setContractId(Long contractId) {
+        this.id = contractId;
     }
 
     public int getAmount() {
@@ -51,10 +57,6 @@ public class Loan {
         this.status = status;
     }
 
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
     public LocalDateTime getRequestTime() {
         return requestTime;
     }
@@ -66,11 +68,10 @@ public class Loan {
     @Override
     public String toString() {
         return "Loan{" +
-                "contractId='" + contractId + '\'' +
+                "contractId='" + id + '\'' +
                 ", amount=" + amount +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
-                ", ipAddress='" + ipAddress + '\'' +
                 ", requestTime=" + requestTime +
                 ", status=" + status +
                 '}';

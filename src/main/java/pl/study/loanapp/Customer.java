@@ -1,18 +1,25 @@
 package pl.study.loanapp;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.Set;
 
-class Customer {
+@Entity
+public class Customer {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String name;
     private String surname;
     private int monthlyIncome;
     private Set<Loan> loans;
 
-    protected Customer(String id, String name, String surname, int monthlyIncome) {
-        this.id = id;
+    protected Customer(String name, String surname, int monthlyIncome) {
         this.name = name;
         this.surname = surname;
         this.monthlyIncome = monthlyIncome;
@@ -47,10 +54,13 @@ class Customer {
         return loans;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", monthlyIncome=" + monthlyIncome +
