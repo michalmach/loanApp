@@ -1,11 +1,11 @@
 package pl.study.loanapp;
 
-import org.apache.tomcat.jni.Local;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +21,11 @@ public class Loan {
     private LocalDateTime requestTime;
     private Status status;
 
-    public Loan(int amount, LocalDateTime fromDate, LocalDateTime toDate, LocalDateTime requestTime) {
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    Loan(int amount, LocalDateTime fromDate, LocalDateTime toDate, LocalDateTime requestTime) {
         this.amount = amount;
         this.fromDate = fromDate;
         this.toDate = toDate;
@@ -37,7 +41,7 @@ public class Loan {
         this.id = contractId;
     }
 
-    public int getAmount() {
+    int getAmount() {
         return amount;
     }
 
@@ -59,6 +63,14 @@ public class Loan {
 
     public LocalDateTime getRequestTime() {
         return requestTime;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public enum Status {

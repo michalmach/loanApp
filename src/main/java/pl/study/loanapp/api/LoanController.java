@@ -7,6 +7,7 @@ import pl.study.loanapp.Loan;
 import pl.study.loanapp.LoanManager;
 import pl.study.loanapp.repository.CustomerRepository;
 
+import java.util.Collections;
 import java.util.Set;
 
 @RestController
@@ -33,6 +34,6 @@ public class LoanController {
 
     @GetMapping("/history")
     public Set<Loan> getHistory() {
-
+        return Collections.emptySet();
     }
 }

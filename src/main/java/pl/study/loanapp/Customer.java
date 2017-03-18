@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,9 +18,11 @@ public class Customer {
     private String name;
     private String surname;
     private int monthlyIncome;
+
+    @OneToMany(mappedBy = "customer")
     private Set<Loan> loans;
 
-    protected Customer(String name, String surname, int monthlyIncome) {
+    Customer(String name, String surname, int monthlyIncome) {
         this.name = name;
         this.surname = surname;
         this.monthlyIncome = monthlyIncome;
@@ -30,7 +33,7 @@ public class Customer {
         return !loans.isEmpty();
     }
 
-    protected void addLoan(Loan loan) {
+    void addLoan(Loan loan) {
         loans.add(loan);
     }
 
