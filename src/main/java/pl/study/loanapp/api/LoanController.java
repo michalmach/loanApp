@@ -18,6 +18,9 @@ public class LoanController {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    LoanManager loanManager;
+
     @PostMapping("/customer")
     public String apply(@RequestBody Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
@@ -28,7 +31,7 @@ public class LoanController {
     public Decision apply(@PathVariable Long id, @RequestBody Loan loan) {
 
         Customer customer = customerRepository.getOne(id);
-        LoanManager.grantLoan(customer, loan);
+        loanManager.grantLoan(customer, loan);
     return Decision.ACCEPTED;
     }
 
