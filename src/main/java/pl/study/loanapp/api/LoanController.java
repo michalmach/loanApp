@@ -1,12 +1,14 @@
 package pl.study.loanapp.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.study.loanapp.Customer;
 import pl.study.loanapp.Loan;
 import pl.study.loanapp.LoanManager;
 import pl.study.loanapp.repository.CustomerRepository;
 
+import java.net.URI;
 import java.util.Collections;
 import java.util.Set;
 
@@ -15,16 +17,20 @@ public class LoanController {
 
     private final String CUSTOMER_BASE_URL = "customer/";
 
-    @Autowired
-    CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final LoanManager loanManager;
 
     @Autowired
-    LoanManager loanManager;
+    public LoanController(CustomerRepository customerRepository, LoanManager loanManager) {
+        this.customerRepository = customerRepository;
+        this.loanManager = loanManager;
+    }
 
     @PostMapping("/customer")
-    public String apply(@RequestBody Customer customer) {
+    public ResponseEntity<Void> apply(@RequestBody Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
-        return CUSTOMER_BASE_URL + savedCustomer.getId();
+        return ResponseEntity.created(URI.create(CUSTOMER_BASE_URL + savedCustomer.getId())).build(); //NOT HATEOAS
+        //after changes - still not hateoas
     }
 
     @PostMapping("/customer/{id}")

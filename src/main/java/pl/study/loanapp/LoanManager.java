@@ -8,20 +8,14 @@ import java.util.Set;
 
 @Component
 public class LoanManager {
-
-
-    @Value("${loanapp.base.nightIncomeMultiplier}")
     private int NIGHT_INCOME_MULTIPLIER;
-    @Value("${loanapp.base.dayIncomeMultiplier}")
     private int DAY_INCOME_MULTIPLIER;
 
-    LocalTime startOfNight = LocalTime.of(0, 0, 0);
-    LocalTime endOfNight = LocalTime.of(6, 0, 0);
+    private LocalTime startOfNight = LocalTime.of(0, 0, 0);
+    private LocalTime endOfNight = LocalTime.of(6, 0, 0);
 
-    public LoanManager() {
-    }
-
-    public LoanManager(int nightIncomeMultiplier, int dayIncomeMultiplier) {
+    public LoanManager(@Value("${loanapp.base.nightIncomeMultiplier}") int nightIncomeMultiplier,
+                       @Value("${loanapp.base.dayIncomeMultiplier}") int dayIncomeMultiplier) {
         this.NIGHT_INCOME_MULTIPLIER = nightIncomeMultiplier;
         this.DAY_INCOME_MULTIPLIER = dayIncomeMultiplier;
     }
