@@ -22,10 +22,10 @@ public class LoanManagerTest {
     public void setUp() throws Exception {
 
         loanManager = new LoanManager(NIGHT_INCOME_MULTIPLIER, DAY_INCOME_MULTIPLIER);
-        customer1 = new Customer("Karol", "Wachowicki", 4000);
-        customer2 = new Customer("Mieczyslaw", "Wachowicki", 2000);
-        loanAtNight = new Loan(10000, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.of(2017,1,1,1,0));
-        loanAtDay = new Loan(10000, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.of(2017,1,1,13,0));
+        //customer1 = new Customer("Karol", "Wachowicki", 4000);
+        //customer2 = new Customer("Mieczyslaw", "Wachowicki", 2000);
+        //loanAtNight = new Loan(10000, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.of(2017,1,1,1,0));
+        //loanAtDay = new Loan(10000, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.of(2017,1,1,13,0));
     }
 
     @Test

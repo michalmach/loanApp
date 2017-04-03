@@ -74,7 +74,7 @@ public class Loan {
     }
 
     public enum Status {
-        NEW, GRANTED, REJECTED, PENDING;
+        NEW, GRANTED, REJECTED;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package pl.study.loanapp;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<Loan> loans;
 
+    Customer() {}
     Customer(String name, String surname, int monthlyIncome) {
         this.name = name;
         this.surname = surname;
