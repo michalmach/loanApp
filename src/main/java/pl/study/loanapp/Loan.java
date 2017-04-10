@@ -1,11 +1,6 @@
 package pl.study.loanapp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,12 +20,16 @@ public class Loan {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    Loan(int amount, LocalDateTime fromDate, LocalDateTime toDate, LocalDateTime requestTime) {
+    Loan() {
+        this.status = Status.NEW;
+        this.requestTime = LocalDateTime.now();
+    }
+
+    Loan(int amount, LocalDateTime fromDate, LocalDateTime toDate) {
+        this();
         this.amount = amount;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.requestTime = requestTime;
-        this.status = Status.NEW;
     }
 
     public Long getContractId() {

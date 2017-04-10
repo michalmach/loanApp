@@ -24,7 +24,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<Loan> loans;
 
-    Customer() {}
+    Customer() {
+    }
     Customer(String name, String surname, int monthlyIncome) {
         this.name = name;
         this.surname = surname;

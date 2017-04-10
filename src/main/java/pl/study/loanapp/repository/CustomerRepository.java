@@ -5,7 +5,7 @@ import pl.study.loanapp.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
 
-    Customer findByName(String name);
+   //TODO Customer findByName(String name);
 
 
 }

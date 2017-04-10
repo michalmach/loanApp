@@ -29,7 +29,7 @@ public class LoanManager {
     }
 
     public Loan applyForLoan(Long customerId, Loan loan) {
-        Customer customer = customerRepository.getOne(customerId);
+        Customer customer = customerRepository.findOne(customerId);
         if(isCustomerAllowedForLoan(customer, loan)) {
             loan.setStatus(Loan.Status.GRANTED);
             customer.addLoan(loan);
@@ -48,8 +48,8 @@ public class LoanManager {
     public void extendCustomersLoan(Loan loan) {
 
     }
-    public void retrieveHistory(Customer customer) {
-
+    public Set<Loan> retrieveHistory(Long customerId) {
+        return customerRepository.getOne(customerId).getLoans();
     }
 
     public List<Customer> getCustomers() {
