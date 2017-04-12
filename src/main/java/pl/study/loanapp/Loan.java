@@ -1,5 +1,7 @@
 package pl.study.loanapp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,7 +19,8 @@ public class Loan {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer", nullable = false)
+    @JsonBackReference
     private Customer customer;
 
     Loan() {

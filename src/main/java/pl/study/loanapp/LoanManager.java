@@ -35,8 +35,6 @@ public class LoanManager {
         } else {
             loan.setStatus(Loan.Status.REJECTED);
         }
-        loan.setCustomer(customer);
-        customerRepository.save(loan);
         customer.addLoan(loan);
         saveCustomer(customer);
         return loan;

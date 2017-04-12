@@ -1,6 +1,7 @@
 package pl.study.loanapp;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,7 +18,8 @@ public class Customer {
     private String surname;
     private int monthlyIncome;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Loan> loans;
 
     Customer() {
@@ -34,6 +36,7 @@ public class Customer {
     }
 
     void addLoan(Loan loan) {
+        loan.setCustomer(this);
         loans.add(loan);
     }
 
