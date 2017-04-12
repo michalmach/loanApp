@@ -53,19 +53,9 @@ public class LoanController {
         return loanManager.retrieveHistory(customerId);
     }
 
+    // Helpers only for developement
     @GetMapping("/date")
-    public KlasaDoWykorzystaniaTeraz getLocalDateTimeNow (){
-        return new KlasaDoWykorzystaniaTeraz(LocalDateTime.now());
-    }
-
-    private class KlasaDoWykorzystaniaTeraz {
-        private LocalDateTime ltd;
-        public KlasaDoWykorzystaniaTeraz(LocalDateTime ltd) {
-            this.ltd = ltd;
-        }
-
-        public LocalDateTime getLtd() {
-            return ltd;
-        }
+    public LocalDateTime getLocalDateTimeNow (){
+        return LocalDateTime.now();
     }
 }

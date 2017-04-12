@@ -32,10 +32,13 @@ public class LoanManager {
         Customer customer = customerRepository.findOne(customerId);
         if(isCustomerAllowedForLoan(customer, loan)) {
             loan.setStatus(Loan.Status.GRANTED);
-            customer.addLoan(loan);
         } else {
             loan.setStatus(Loan.Status.REJECTED);
         }
+        loan.setCustomer(customer);
+        customerRepository.save(loan);
+        customer.addLoan(loan);
+        saveCustomer(customer);
         return loan;
     }
 
