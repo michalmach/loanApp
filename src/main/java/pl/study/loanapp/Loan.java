@@ -67,6 +67,10 @@ public class Loan {
         return requestTime;
     }
 
+    public void setRequestTime(LocalDateTime requestTime) {
+        this.requestTime = requestTime;
+    }
+
     public Customer getCustomer() {
         return customer;
     }

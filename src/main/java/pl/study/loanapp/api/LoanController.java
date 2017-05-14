@@ -43,12 +43,12 @@ public class LoanController {
         return loanManager.applyForLoan(customerId, loan);
     }
 
-    @GetMapping("/customers")
+    @GetMapping("customers")
     public List<Customer> getCustomers() {
         return loanManager.getCustomers();
     }
 
-    @GetMapping(CUSTOMER_BASE_URL + "{customerId}" + "/history")
+    @GetMapping(CUSTOMER_BASE_URL + "{customerId}/" + "history")
     public Set<Loan> getHistory(@PathVariable Long customerId) {
         return loanManager.retrieveHistory(customerId);
     }

@@ -13,6 +13,7 @@ import java.util.Set;
 
 @Component
 public class LoanManager {
+    public static final int MAX_LOAN_APPLICATIONS_PER_DAY = 3;
     private int NIGHT_INCOME_MULTIPLIER;
     private int DAY_INCOME_MULTIPLIER;
 
@@ -20,7 +21,7 @@ public class LoanManager {
     private LocalTime endOfNight = LocalTime.of(6, 0, 0);
 
     @Autowired
-    private CustomerRepository customerRepository;
+    protected CustomerRepository customerRepository;
 
     public LoanManager(@Value("${loanapp.base.nightIncomeMultiplier}") int nightIncomeMultiplier,
                        @Value("${loanapp.base.dayIncomeMultiplier}") int dayIncomeMultiplier) {
@@ -47,7 +48,7 @@ public class LoanManager {
     }
 
     public void extendCustomersLoan(Loan loan) {
-
+        //TODO
     }
     public Set<Loan> retrieveHistory(Long customerId) {
         return customerRepository.getOne(customerId).getLoans();
@@ -59,23 +60,23 @@ public class LoanManager {
 
     boolean isCustomerAllowedForLoan(Customer customer, Loan loan) {
 
-        return isNumberOfTodayLoanApplicationsExceeded(customer.getLoans(), loan.getRequestTime()) &&
-                !isLoanAllowed(customer.getMonthlyIncome(), loan);
+        return !isNumberOfTodayLoanApplicationsExceeded(customer.getLoans(), loan.getRequestTime()) &&
+                isLoanAllowed(customer.getMonthlyIncome(), loan);
     }
 
     boolean isNumberOfTodayLoanApplicationsExceeded(Set<Loan> loans, LocalDateTime requestTime) {
 
         long todayLoanRequest = loans.stream().filter(l ->
                 Utils.isWithin(l.getRequestTime(), requestTime)).count();
-        return todayLoanRequest <= 3;
+        return todayLoanRequest > MAX_LOAN_APPLICATIONS_PER_DAY;
     }
 
     boolean isLoanAllowed(int monthlyIncome, Loan loan) {
         int maxPossibleLoan = monthlyIncome * getIncomeMultiplier(loan.getRequestTime());
-        return loan.getAmount() < maxPossibleLoan;
+        return loan.getAmount() <= maxPossibleLoan;
     }
 
-    private int getIncomeMultiplier(LocalDateTime date) {
+    int getIncomeMultiplier(LocalDateTime date) {
         return (date.toLocalTime().isAfter(startOfNight) && date.toLocalTime().isBefore(endOfNight)) ? NIGHT_INCOME_MULTIPLIER : DAY_INCOME_MULTIPLIER;
     }
 }
