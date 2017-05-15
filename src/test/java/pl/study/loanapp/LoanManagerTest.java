@@ -115,12 +115,20 @@ public class LoanManagerTest {
         Mockito.when(managerSpy.customerRepository.findOne(Mockito.anyLong())).thenReturn(customerSpy);
         Mockito.when(managerSpy.customerRepository.save(Mockito.any(Customer.class))).thenReturn(customerSpy);
 
-        //Check status GRANTED and REJECTED
-        
+        //Check status GRANTED
+        Loan loanResult = managerSpy.applyForLoan(CUSTOMER_ID, loanSmall);
+        assertEquals(Loan.Status.GRANTED, loanResult.getStatus());
 
-        //Check if methods ... are invoked
-        managerSpy.applyForLoan(CUSTOMER_ID, loanBig);
-        Mockito.verify(managerSpy, Mockito.times(1)).saveCustomer(Mockito.any(Customer.class));
-        Mockito.verify(customerSpy, Mockito.times(1)).addLoan(Mockito.any(Loan.class));
+        // Check status REJECTED
+        loanResult = managerSpy.applyForLoan(CUSTOMER_ID, loanBig);
+        assertEquals(Loan.Status.REJECTED, loanResult.getStatus());
+
+        // Check if methods ... are invoked
+        Mockito.verify(managerSpy, Mockito.times(2)).saveCustomer(customerSpy);
+        Mockito.verify(customerSpy, Mockito.times(1)).addLoan(loanSmall);
+        Mockito.verify(customerSpy, Mockito.times(1)).addLoan(loanBig);
+        Mockito.verify(customerSpy, Mockito.times(2)).addLoan(Mockito.any(Loan.class));
+
+
     }
 }

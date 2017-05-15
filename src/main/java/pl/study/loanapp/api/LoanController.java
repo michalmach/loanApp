@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.study.loanapp.Customer;
 import pl.study.loanapp.Loan;
+import pl.study.loanapp.LoanExtension;
 import pl.study.loanapp.LoanManager;
 
 import java.net.URI;
@@ -40,7 +41,20 @@ public class LoanController {
 
     @PostMapping(CUSTOMER_BASE_URL + "{customerId}")
     public Loan applyForLoan(@PathVariable Long customerId, @RequestBody Loan loan) {
+        //TODO: what if customer cannot be found?
         return loanManager.applyForLoan(customerId, loan);
+    }
+
+    @PostMapping(CUSTOMER_BASE_URL + "{customerId}/" + "{loanId}")
+    public ResponseEntity<LoanExtension> extendLoan(@PathVariable Long customerId, @PathVariable Long loanId, @RequestBody int extensionDaysNum) {
+
+        Optional<LoanExtension> loanExtensionOptional = loanManager.extendCustomerLoan(customerId, loanId, extensionDaysNum);
+
+        if (loanExtensionOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(loanExtensionOptional.get());
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping("customers")

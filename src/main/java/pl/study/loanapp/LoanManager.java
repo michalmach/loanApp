@@ -47,8 +47,22 @@ public class LoanManager {
         return Optional.of(dbCustomer);
     }
 
-    public void extendCustomersLoan(Loan loan) {
-        //TODO
+    // From requirements: extend only for a one week at a time.
+    // Interests will be multiplied by a factor of 1.5 each time.
+    public Optional<LoanExtension> extendCustomerLoan(long customerId, long loanId, int extensionDaysNum) {
+        LoanExtension extension = null;
+        Customer customer = customerRepository.getOne(customerId);
+        Optional<Loan> loanOptional = customer
+                .getLoans()
+                .stream()
+                .filter(l -> l.getContractId() == loanId).findFirst();
+
+        if (loanOptional.isPresent()) {
+            extension = loanOptional.get().extendLoan(extensionDaysNum);
+        }
+        saveCustomer(customer);
+
+        return Optional.ofNullable(extension);
     }
     public Set<Loan> retrieveHistory(Long customerId) {
         return customerRepository.getOne(customerId).getLoans();
